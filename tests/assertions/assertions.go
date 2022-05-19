@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	defaultEqualsMessage  = "\nExpected: '%#v' (type %T)\nBut was:  '%#v' (type %T)"
+	defaultEqualsMessage  = "\nExpected: '%#v' (type %T)\nBut got:  '%#v' (type %T)"
 	defaultNotSameMessage = "the objects\n(%p) %T %v and\n(%p) %T %v\nare not same object."
 )
 

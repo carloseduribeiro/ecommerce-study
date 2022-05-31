@@ -29,8 +29,22 @@ func (c CPF) Validate() bool {
 	return checkDigit == calculatedCheckDigit
 }
 
-func extractCheckDigit(cpf string) string {
-	return cpf[len(cpf)-2:]
+func cleanCpf[T string | CPF](cpf T) string {
+	reg, _ := regexp.Compile("\\d+")
+	result := reg.FindAllString(string(cpf), -1)
+	return strings.Join(result, "")
+}
+
+func isValidLength[T string | CPF](cpf T) bool {
+	if len(cpf) == 11 {
+		return true
+	}
+	return false
+}
+
+func hasAllDigitsEquals(cpf string) bool {
+	firstDigit := string(cpf[0])
+	return strings.Count(cpf, firstDigit) == len(cpf)
 }
 
 func calculateCheckDigit(cpf string, factor int) int {
@@ -49,20 +63,6 @@ func calculateCheckDigit(cpf string, factor int) int {
 	return 0
 }
 
-func hasAllDigitsEquals(cpf string) bool {
-	firstDigit := string(cpf[0])
-	return strings.Count(cpf, firstDigit) == len(cpf)
-}
-
-func isValidLength[T string | CPF](cpf T) bool {
-	if len(cpf) == 11 {
-		return true
-	}
-	return false
-}
-
-func cleanCpf[T string | CPF](cpf T) string {
-	reg, _ := regexp.Compile("\\d+")
-	result := reg.FindAllString(string(cpf), -1)
-	return strings.Join(result, "")
+func extractCheckDigit(cpf string) string {
+	return cpf[len(cpf)-2:]
 }

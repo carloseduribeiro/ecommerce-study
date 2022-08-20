@@ -1,7 +1,7 @@
 package cpf
 
 import (
-	"github.com/ecommerce-study/tests/assertions"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -20,7 +20,7 @@ func TestValidate(t *testing.T) {
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
 			obtained := tt.cpf.Validate()
-			assertions.AssertEquals(t, tt.expected, obtained)
+			assert.EqualValues(t, tt.expected, obtained)
 		})
 	}
 }

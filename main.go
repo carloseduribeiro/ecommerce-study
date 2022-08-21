@@ -1,1 +1,1 @@
-package ecommerce_study
+package main

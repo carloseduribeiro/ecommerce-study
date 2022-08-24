@@ -1,6 +1,7 @@
-package cpf
+package order
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -12,10 +13,23 @@ const (
 	factorDigit2 = 11
 )
 
-type CPF string
+type CPF struct {
+	value string
+}
 
-func (c CPF) Validate() bool {
-	cpf := cleanCpf(c)
+func NewCPF(value string) (*CPF, error) {
+	if !validate(value) {
+		return nil, errors.New("invalid CPF")
+	}
+	return &CPF{value: value}, nil
+}
+
+func (c CPF) Value() string {
+	return c.value
+}
+
+func validate(cpf string) bool {
+	cpf = cleanCpf(cpf)
 	if !isValidLength(cpf) {
 		return false
 	}
@@ -29,13 +43,13 @@ func (c CPF) Validate() bool {
 	return checkDigit == calculatedCheckDigit
 }
 
-func cleanCpf[T string | CPF](cpf T) string {
+func cleanCpf(cpf string) string {
 	reg, _ := regexp.Compile("\\d+")
-	result := reg.FindAllString(string(cpf), -1)
+	result := reg.FindAllString(cpf, -1)
 	return strings.Join(result, "")
 }
 
-func isValidLength[T string | CPF](cpf T) bool {
+func isValidLength(cpf string) bool {
 	if len(cpf) == 11 {
 		return true
 	}

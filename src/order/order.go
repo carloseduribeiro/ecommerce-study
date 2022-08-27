@@ -1,31 +1,32 @@
 package order
 
-import "errors"
+import (
+	"time"
+)
 
 type Order struct {
 	cpf        CPF
 	orderItems []OrderItem
 	coupon     *Coupon
+	issueDate  time.Time
 }
 
-func NewOrder(cpf string) (*Order, error) {
+func NewOrder(cpf string, issueDate time.Time) (*Order, error) {
 	orderCpf, err := NewCPF(cpf)
 	if err != nil {
 		return nil, err
 	}
-	return &Order{cpf: *orderCpf}, nil
+	return &Order{cpf: *orderCpf, issueDate: issueDate}, nil
 }
 
 func (o *Order) AddItem(item Item, quantity int) {
 	o.orderItems = append(o.orderItems, NewOrderItem(item, quantity, item.price))
 }
 
-func (o *Order) AddCoupon(coupon Coupon) error {
-	if coupon.itsExpired() {
-		return errors.New("expired coupon")
+func (o *Order) AddCoupon(coupon Coupon) {
+	if !coupon.ItsExpired(o.issueDate) {
+		o.coupon = &coupon
 	}
-	o.coupon = &coupon
-	return nil
 }
 
 func (o *Order) Total() (total float64) {
@@ -33,7 +34,7 @@ func (o *Order) Total() (total float64) {
 		total += orderItem.Total()
 	}
 	if o.coupon != nil {
-		total -= (total * float64(o.coupon.percentage)) / 100
+		total -= o.coupon.CalculateDiscount(total)
 	}
 	return
 }

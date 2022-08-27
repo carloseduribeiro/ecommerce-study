@@ -9,6 +9,7 @@ type Order struct {
 	orderItems []OrderItem
 	coupon     *Coupon
 	issueDate  time.Time
+	freight    Freight
 }
 
 func NewOrder(cpf string, issueDate time.Time) (*Order, error) {
@@ -16,11 +17,16 @@ func NewOrder(cpf string, issueDate time.Time) (*Order, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Order{cpf: *orderCpf, issueDate: issueDate}, nil
+	return &Order{
+		cpf:       *orderCpf,
+		issueDate: issueDate,
+		freight:   NewFreight(),
+	}, nil
 }
 
 func (o *Order) AddItem(item Item, quantity int) {
 	o.orderItems = append(o.orderItems, NewOrderItem(item, quantity, item.price))
+	o.freight.AddItem(item, quantity)
 }
 
 func (o *Order) AddCoupon(coupon Coupon) {
@@ -36,5 +42,6 @@ func (o *Order) Total() (total float64) {
 	if o.coupon != nil {
 		total -= o.coupon.CalculateDiscount(total)
 	}
+	total += o.freight.Total()
 	return
 }

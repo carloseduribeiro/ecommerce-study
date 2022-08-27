@@ -1,5 +1,7 @@
 package order
 
+import "errors"
+
 type Order struct {
 	cpf        CPF
 	orderItems []OrderItem
@@ -18,8 +20,12 @@ func (o *Order) AddItem(item Item, quantity int) {
 	o.orderItems = append(o.orderItems, NewOrderItem(item, quantity, item.price))
 }
 
-func (o *Order) AddCoupon(coupon Coupon) {
+func (o *Order) AddCoupon(coupon Coupon) error {
+	if coupon.itsExpired() {
+		return errors.New("expired coupon")
+	}
 	o.coupon = &coupon
+	return nil
 }
 
 func (o *Order) Total() (total float64) {

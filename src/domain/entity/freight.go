@@ -1,4 +1,4 @@
-package order
+package entity
 
 const (
 	DefaultDistance     float64 = 1000

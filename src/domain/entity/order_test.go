@@ -1,4 +1,4 @@
-package order
+package entity
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -12,7 +12,7 @@ func TestNewOrder(t *testing.T) {
 		// given
 		invalidCpf := "93847575438"
 		// when
-		order, err := NewOrder(invalidCpf, time.Now())
+		order, err := NewOrder(invalidCpf)
 		// then
 		assert.Error(t, err)
 		assert.Nil(t, order)
@@ -20,7 +20,7 @@ func TestNewOrder(t *testing.T) {
 
 	t.Run("should create an order with three items", func(t *testing.T) {
 		// given
-		order, err := NewOrder("17185070031", time.Now())
+		order, err := NewOrder("17185070031")
 		require.NoError(t, err)
 		// when
 		order.AddItem(NewItem(1, "Instrumentos Musicais", "Guitarra", 1000.0), 1)
@@ -34,9 +34,9 @@ func TestNewOrder(t *testing.T) {
 	t.Run("should create an order with three items and a discount coupon", func(t *testing.T) {
 		// given
 		expirationDate := time.Date(2022, 8, 24, 0, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(20, "20OFF", expirationDate)
+		coupon := NewCoupon(20, "20OFF", WithExpirationDate(expirationDate))
 		issueDate := expirationDate.Add(-1 * time.Hour)
-		order, err := NewOrder("17185070031", issueDate)
+		order, err := NewOrder("17185070031", WithIssueDate(issueDate))
 		require.NoError(t, err)
 		order.AddItem(NewItem(1, "Instrumentos Musicais", "Guitarra", 1000.0), 1)
 		order.AddItem(NewItem(2, "Instrumentos Musicais", "Amplificador", 5000.0), 1)
@@ -51,9 +51,9 @@ func TestNewOrder(t *testing.T) {
 	t.Run("should create an order with three items and an expired discount coupon", func(t *testing.T) {
 		// given
 		expirationDate := time.Date(2022, 8, 24, 0, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(20, "20OFF", expirationDate)
+		coupon := NewCoupon(20, "20OFF", WithExpirationDate(expirationDate))
 		issueDate := expirationDate.Add(1 * time.Hour)
-		order, err := NewOrder("17185070031", issueDate)
+		order, err := NewOrder("17185070031", WithIssueDate(issueDate))
 		require.NoError(t, err)
 		order.AddItem(NewItem(1, "Instrumentos Musicais", "Guitarra", 1000.0), 1)
 		order.AddItem(NewItem(2, "Instrumentos Musicais", "Amplificador", 5000.0), 1)
@@ -67,7 +67,7 @@ func TestNewOrder(t *testing.T) {
 
 	t.Run("should create an order with three items and calculate shipping", func(t *testing.T) {
 		// given
-		order, err := NewOrder("17185070031", time.Now())
+		order, err := NewOrder("17185070031")
 		require.NoError(t, err)
 		// when
 		order.AddItem(NewItem(1, "Instrumentos Musicais", "Guitarra", 1000.0, WithDimensions(100, 30, 10), WithWeight(3)), 1)
@@ -82,7 +82,7 @@ func TestNewOrder(t *testing.T) {
 
 	t.Run("should create an order with three items and calculate minimum shipping", func(t *testing.T) {
 		// given
-		order, err := NewOrder("17185070031", time.Now())
+		order, err := NewOrder("17185070031")
 		require.NoError(t, err)
 		// when
 		order.AddItem(NewItem(3, "Instrumentos Musicais", "Cabo", 30.0, WithDimensions(10, 10, 10), WithWeight(0.9)), 1)

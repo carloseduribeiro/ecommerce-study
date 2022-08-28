@@ -1,4 +1,4 @@
-package order
+package entity
 
 type ItemOption func(item *Item)
 
@@ -53,4 +53,8 @@ func (i Item) Density() float64 {
 		return i.weight / i.Volume()
 	}
 	return 0
+}
+
+func (i Item) Id() int {
+	return i.id
 }

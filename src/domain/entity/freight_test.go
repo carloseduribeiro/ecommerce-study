@@ -1,4 +1,4 @@
-package order
+package entity
 
 import (
 	"github.com/stretchr/testify/assert"

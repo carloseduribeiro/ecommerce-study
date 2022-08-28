@@ -1,8 +1,16 @@
-package order
+package entity
 
 import (
 	"time"
 )
+
+type OrderOption func(*Order)
+
+func WithIssueDate(issueDate time.Time) OrderOption {
+	return func(o *Order) {
+		o.issueDate = issueDate
+	}
+}
 
 type Order struct {
 	cpf        CPF
@@ -12,16 +20,19 @@ type Order struct {
 	freight    Freight
 }
 
-func NewOrder(cpf string, issueDate time.Time) (*Order, error) {
+func NewOrder(cpf string, opts ...OrderOption) (*Order, error) {
 	orderCpf, err := NewCPF(cpf)
 	if err != nil {
 		return nil, err
 	}
-	return &Order{
-		cpf:       *orderCpf,
-		issueDate: issueDate,
-		freight:   NewFreight(),
-	}, nil
+	order := &Order{
+		cpf:     *orderCpf,
+		freight: NewFreight(),
+	}
+	for _, opt := range opts {
+		opt(order)
+	}
+	return order, nil
 }
 
 func (o *Order) AddItem(item Item, quantity int) {

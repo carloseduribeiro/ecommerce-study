@@ -1,4 +1,4 @@
-package order
+package entity
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -10,7 +10,7 @@ func TestCoupon(t *testing.T) {
 	t.Run("should create an expired Coupon", func(t *testing.T) {
 		// given
 		expirationDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(0, "", expirationDate)
+		coupon := NewCoupon(0, "", WithExpirationDate(expirationDate))
 		timeNow := expirationDate.Add(1 * time.Second)
 		// when
 		result := coupon.ItsExpired(timeNow)
@@ -21,7 +21,7 @@ func TestCoupon(t *testing.T) {
 	t.Run("should create a not expired Coupon", func(t *testing.T) {
 		// given
 		expirationDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(0, "", expirationDate)
+		coupon := NewCoupon(0, "", WithExpirationDate(expirationDate))
 		timeNow := expirationDate.Add(-1 * time.Second)
 		// when
 		result := coupon.ItsExpired(timeNow)
@@ -32,14 +32,26 @@ func TestCoupon(t *testing.T) {
 	t.Run("should create a not expired Coupon and calculate the discount", func(t *testing.T) {
 		// given
 		expirationDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(20, "", expirationDate)
+		coupon := NewCoupon(20, "", WithExpirationDate(expirationDate))
 		timeNow := expirationDate.Add(-1 * time.Second)
 		amount := 1000.0
 		// when
-		itsExpirted := coupon.ItsExpired(timeNow)
+		itsExpired := coupon.ItsExpired(timeNow)
 		discount := coupon.CalculateDiscount(amount)
 		// when
-		assert.False(t, itsExpirted)
+		assert.False(t, itsExpired)
+		assert.Equal(t, discount, 200.0)
+	})
+
+	t.Run("should create a Coupon that never expires", func(t *testing.T) {
+		// given
+		coupon := NewCoupon(20, "")
+		amount := 1000.0
+		// when
+		itsExpired := coupon.ItsExpired(time.Now())
+		discount := coupon.CalculateDiscount(amount)
+		// when
+		assert.False(t, itsExpired)
 		assert.Equal(t, discount, 200.0)
 	})
 }

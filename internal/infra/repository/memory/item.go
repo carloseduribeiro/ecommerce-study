@@ -1,6 +1,8 @@
 package memory
 
-import "github.com/ecommerce-study/src/domain/entity"
+import (
+	"github.com/ecommerce-study/internal/domain/entity"
+)
 
 type ItemRepositoryMemory struct {
 	items []entity.Item

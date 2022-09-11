@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/ecommerce-study/src/domain/entity"
-	"github.com/ecommerce-study/src/domain/repository"
+	"github.com/ecommerce-study/internal/domain/entity"
+	repository2 "github.com/ecommerce-study/internal/domain/repository"
 )
 
 type PlaceOrderInputOption func(*PlaceOrderInput)
@@ -45,12 +45,12 @@ func (p PlaceOrderOutput) Total() float64 {
 }
 
 type PlaceOrder struct {
-	itemRepository   repository.ItemRepository
-	orderRepository  repository.OrderRepository
-	couponRepository repository.CouponRepository
+	itemRepository   repository2.ItemRepository
+	orderRepository  repository2.OrderRepository
+	couponRepository repository2.CouponRepository
 }
 
-func NewPlaceOrder(itemRepository repository.ItemRepository, orderRepository repository.OrderRepository, couponRepository repository.CouponRepository) PlaceOrder {
+func NewPlaceOrder(itemRepository repository2.ItemRepository, orderRepository repository2.OrderRepository, couponRepository repository2.CouponRepository) PlaceOrder {
 	return PlaceOrder{
 		itemRepository:   itemRepository,
 		orderRepository:  orderRepository,

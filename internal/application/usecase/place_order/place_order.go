@@ -2,16 +2,16 @@ package place_order
 
 import (
 	"github.com/ecommerce-study/internal/domain/entity"
-	repository2 "github.com/ecommerce-study/internal/domain/repository"
+	"github.com/ecommerce-study/internal/domain/repository"
 )
 
 type PlaceOrder struct {
-	itemRepository   repository2.ItemRepository
-	orderRepository  repository2.OrderRepository
-	couponRepository repository2.CouponRepository
+	itemRepository   repository.ItemRepository
+	orderRepository  repository.OrderRepository
+	couponRepository repository.CouponRepository
 }
 
-func NewPlaceOrder(itemRepository repository2.ItemRepository, orderRepository repository2.OrderRepository, couponRepository repository2.CouponRepository) PlaceOrder {
+func NewPlaceOrder(itemRepository repository.ItemRepository, orderRepository repository.OrderRepository, couponRepository repository.CouponRepository) PlaceOrder {
 	return PlaceOrder{
 		itemRepository:   itemRepository,
 		orderRepository:  orderRepository,

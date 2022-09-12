@@ -6,28 +6,25 @@ import (
 
 type OrderOption func(*Order)
 
-func WithIssueDate(issueDate time.Time) OrderOption {
-	return func(o *Order) {
-		o.issueDate = issueDate
-	}
-}
-
 type Order struct {
 	cpf        CPF
 	orderItems []OrderItem
 	coupon     *Coupon
 	issueDate  time.Time
 	freight    Freight
+	code       OrderCode
 }
 
-func NewOrder(cpf string, opts ...OrderOption) (*Order, error) {
+func NewOrder(cpf string, issueDate time.Time, sequence int, opts ...OrderOption) (*Order, error) {
 	orderCpf, err := NewCPF(cpf)
 	if err != nil {
 		return nil, err
 	}
 	order := &Order{
-		cpf:     *orderCpf,
-		freight: NewFreight(),
+		cpf:       *orderCpf,
+		freight:   NewFreight(),
+		issueDate: issueDate,
+		code:      NewOrderCode(issueDate, sequence),
 	}
 	for _, opt := range opts {
 		opt(order)
@@ -55,4 +52,8 @@ func (o *Order) Total() (total float64) {
 	}
 	total += o.freight.Total()
 	return
+}
+
+func (o *Order) Code() OrderCode {
+	return o.code
 }

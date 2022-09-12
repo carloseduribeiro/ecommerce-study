@@ -6,4 +6,5 @@ import (
 
 type OrderRepository interface {
 	Save(order *entity.Order) error
+	Count() (*int, error)
 }

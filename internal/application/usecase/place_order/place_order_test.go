@@ -1,7 +1,7 @@
 package place_order
 
 import (
-	memory2 "github.com/ecommerce-study/internal/infra/repository/memory"
+	"github.com/ecommerce-study/internal/infra/repository/memory"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -10,9 +10,9 @@ import (
 func TestPlaceOrder(t *testing.T) {
 	t.Run("should place order", func(t *testing.T) {
 		// given
-		itemRepository := memory2.NewItemRepository()
-		orderRepository := memory2.NewOrderRepository()
-		couponRepository := memory2.NewCouponRepository()
+		itemRepository := memory.NewItemRepository()
+		orderRepository := memory.NewOrderRepository()
+		couponRepository := memory.NewCouponRepository()
 		coupon := "VALE20"
 		input := PlaceOrderInput{
 			Cpf: "17185070031",
@@ -32,9 +32,9 @@ func TestPlaceOrder(t *testing.T) {
 
 	t.Run("should place order and generate order code", func(t *testing.T) {
 		// given
-		itemRepository := memory2.NewItemRepository()
-		orderRepository := memory2.NewOrderRepository()
-		couponRepository := memory2.NewCouponRepository()
+		itemRepository := memory.NewItemRepository()
+		orderRepository := memory.NewOrderRepository()
+		couponRepository := memory.NewCouponRepository()
 		coupon := "VALE20"
 		issueDate := time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC)
 		input := PlaceOrderInput{

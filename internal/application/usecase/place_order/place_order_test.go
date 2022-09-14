@@ -21,13 +21,14 @@ func TestPlaceOrder(t *testing.T) {
 				{IdItem: 2, Quantity: 1},
 				{IdItem: 3, Quantity: 3},
 			},
-			Coupon: &coupon,
+			Coupon:    &coupon,
+			IssueDate: time.Date(2022, 1, 1, 0, 0, 0, 0, time.UTC),
 		}
 		placeOrder := NewPlaceOrder(&itemRepository, &orderRepository, &couponRepository)
 		// when
 		output := placeOrder.Execute(input)
 		// then
-		assert.Equal(t, 4872.0, output.Total())
+		assert.Equal(t, 5132.0, output.Total())
 	})
 
 	t.Run("should place order and generate order code", func(t *testing.T) {

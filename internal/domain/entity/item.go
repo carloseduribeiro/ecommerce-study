@@ -58,3 +58,15 @@ func (i Item) Density() float64 {
 func (i Item) Id() int {
 	return i.id
 }
+
+func (i Item) Category() string {
+	return i.category
+}
+
+func (i Item) Description() string {
+	return i.description
+}
+
+func (i Item) Price() float64 {
+	return i.price
+}

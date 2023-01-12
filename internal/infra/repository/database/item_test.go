@@ -30,13 +30,22 @@ func (i *ItemRepositoryTestSuite) AfterTest(_, _ string) {
 }
 
 func (i *ItemRepositoryTestSuite) TestGetById() {
-	i.Run("should test item repository", func() {
+	i.Run("should return an existing item", func() {
 		t := i.T()
 		itemRepository := NewItemRepository(i.conn)
 		item, err := itemRepository.GetById(1)
 		require.NoError(t, err)
 		assert.Equal(t, item.Description(), "Guitarra")
 	})
+
+	i.Run("should return an error when trying get an non existing item", func() {
+		t := i.T()
+		itemRepository := NewItemRepository(i.conn)
+		_, err := itemRepository.GetById(999)
+		require.Error(t, err)
+	})
+
+	// TODO - desenvolver o resto dos testes de integração e de unidade
 }
 
 func TestItemRepository(t *testing.T) {

@@ -12,7 +12,7 @@ type CouponRepositoryMemory struct {
 
 func NewCouponRepository() CouponRepositoryMemory {
 	coupons := []entity.Coupon{
-		entity.NewCoupon(20, "VALE20", entity.WithExpirationDate(time.Date(2022, 9, 14, 0, 0, 0, 0, time.UTC))),
+		entity.NewCoupon(20, "VALE20", entity.WithExpireDate(time.Date(2022, 9, 14, 0, 0, 0, 0, time.UTC))),
 	}
 	return CouponRepositoryMemory{coupons: coupons}
 }

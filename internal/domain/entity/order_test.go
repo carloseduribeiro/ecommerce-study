@@ -34,7 +34,7 @@ func TestNewOrder(t *testing.T) {
 	t.Run("should create an order with three items and a discount coupon", func(t *testing.T) {
 		// given
 		expirationDate := time.Date(2022, 8, 24, 0, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(20, "20OFF", WithExpirationDate(expirationDate))
+		coupon := NewCoupon(20, "20OFF", WithExpireDate(expirationDate))
 		issueDate := expirationDate.Add(-1 * time.Hour)
 		order, err := NewOrder("17185070031", issueDate, 1)
 		require.NoError(t, err)
@@ -51,7 +51,7 @@ func TestNewOrder(t *testing.T) {
 	t.Run("should create an order with three items and an expired discount coupon", func(t *testing.T) {
 		// given
 		expirationDate := time.Date(2022, 8, 24, 0, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(20, "20OFF", WithExpirationDate(expirationDate))
+		coupon := NewCoupon(20, "20OFF", WithExpireDate(expirationDate))
 		issueDate := expirationDate.Add(1 * time.Hour)
 		order, err := NewOrder("17185070031", issueDate, 1)
 		require.NoError(t, err)

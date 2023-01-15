@@ -6,16 +6,16 @@ import (
 
 type CouponOption func(*Coupon)
 
-func WithExpirationDate(expirationDate time.Time) CouponOption {
+func WithExpireDate(expireDate time.Time) CouponOption {
 	return func(coupon *Coupon) {
-		coupon.expirationDate = &expirationDate
+		coupon.expireDate = &expireDate
 	}
 }
 
 type Coupon struct {
-	percentage     uint8
-	code           string
-	expirationDate *time.Time
+	code       string
+	percentage uint8
+	expireDate *time.Time
 }
 
 func NewCoupon(percentage uint8, code string, opts ...CouponOption) Coupon {
@@ -27,8 +27,8 @@ func NewCoupon(percentage uint8, code string, opts ...CouponOption) Coupon {
 }
 
 func (c *Coupon) ItsExpired(dateTimeNow time.Time) bool {
-	if c.expirationDate != nil {
-		if dateTimeNow.Sub(*c.expirationDate) > 0 {
+	if c.expireDate != nil {
+		if dateTimeNow.Sub(*c.expireDate) > 0 {
 			return true
 		}
 	}

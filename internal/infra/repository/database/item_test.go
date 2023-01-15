@@ -44,8 +44,6 @@ func (i *ItemRepositoryTestSuite) TestGetById() {
 		_, err := itemRepository.GetById(999)
 		require.Error(t, err)
 	})
-
-	// TODO - desenvolver o resto dos testes de integração e de unidade
 }
 
 func TestItemRepository(t *testing.T) {

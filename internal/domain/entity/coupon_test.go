@@ -9,9 +9,9 @@ import (
 func TestCoupon(t *testing.T) {
 	t.Run("should create an expired Coupon", func(t *testing.T) {
 		// given
-		expirationDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(0, "", WithExpirationDate(expirationDate))
-		timeNow := expirationDate.Add(1 * time.Second)
+		expireDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
+		coupon := NewCoupon(0, "", WithExpireDate(expireDate))
+		timeNow := expireDate.Add(1 * time.Second)
 		// when
 		result := coupon.ItsExpired(timeNow)
 		// when
@@ -20,9 +20,9 @@ func TestCoupon(t *testing.T) {
 
 	t.Run("should create a not expired Coupon", func(t *testing.T) {
 		// given
-		expirationDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(0, "", WithExpirationDate(expirationDate))
-		timeNow := expirationDate.Add(-1 * time.Second)
+		expireDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
+		coupon := NewCoupon(0, "", WithExpireDate(expireDate))
+		timeNow := expireDate.Add(-1 * time.Second)
 		// when
 		result := coupon.ItsExpired(timeNow)
 		// when
@@ -31,9 +31,9 @@ func TestCoupon(t *testing.T) {
 
 	t.Run("should create a not expired Coupon and calculate the discount", func(t *testing.T) {
 		// given
-		expirationDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
-		coupon := NewCoupon(20, "", WithExpirationDate(expirationDate))
-		timeNow := expirationDate.Add(-1 * time.Second)
+		expireDate := time.Date(2022, 8, 27, 12, 0, 0, 0, time.UTC)
+		coupon := NewCoupon(20, "", WithExpireDate(expireDate))
+		timeNow := expireDate.Add(-1 * time.Second)
 		amount := 1000.0
 		// when
 		itsExpired := coupon.ItsExpired(timeNow)

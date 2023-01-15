@@ -46,6 +46,5 @@ func (i *itemDto) toEntity() entity.Item {
 	if i.width != nil && i.height != nil && i.length != nil {
 		itemOptions = append(itemOptions, entity.WithDimensions(*i.width, *i.height, *i.length))
 	}
-	return entity.NewItem(i.id, i.category, i.description, i.price, itemOptions...,
-	)
+	return entity.NewItem(i.id, i.category, i.description, i.price, itemOptions...)
 }

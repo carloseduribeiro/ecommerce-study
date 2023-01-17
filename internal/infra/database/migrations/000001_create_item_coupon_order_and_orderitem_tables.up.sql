@@ -1,6 +1,6 @@
-create schema if not exists ccca;
+create schema if not exists ecommerce;
 
-create table if not exists ccca.item
+create table if not exists ecommerce.item
 (
     id          serial primary key,
     category    text,
@@ -12,7 +12,7 @@ create table if not exists ccca.item
     weight      integer
 );
 
-create table if not exists ccca.coupon
+create table if not exists ecommerce.coupon
 (
     code        text,
     percentage  numeric,
@@ -20,7 +20,7 @@ create table if not exists ccca.coupon
     primary key (code)
 );
 
-create table if not exists ccca.order
+create table if not exists ecommerce.order
 (
     id         serial,
     coupon     text,
@@ -33,7 +33,7 @@ create table if not exists ccca.order
     primary key (id)
 );
 
-create table if not exists ccca.order_item
+create table if not exists ecommerce.order_item
 (
     id_order integer,
     id_item  integer,

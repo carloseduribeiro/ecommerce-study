@@ -15,7 +15,7 @@ func NewCouponRepository(connection database.Connection) *CouponRepository {
 }
 
 func (c *CouponRepository) GetByCode(code string) (*entity.Coupon, error) {
-	stmt := "select code, percentage, expire_date from ccca.coupon where code = $1"
+	stmt := "SELECT code, percentage, expire_date FROM ccca.coupon WHERE code = $1"
 	row, _ := c.conn.QueryRow(stmt, code)
 	dto := couponDto{}
 	err := row.Scan(&dto.code, &dto.percentage, &dto.expireDate)

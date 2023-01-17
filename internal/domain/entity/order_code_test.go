@@ -11,10 +11,10 @@ func TestOrderCode(t *testing.T) {
 		// given
 		issueDate := time.Date(2022, time.September, 1, 1, 0, 0, 0, time.UTC)
 		sequence := 1
+		expected := "202200000001"
 		// when
 		orderCode := NewOrderCode(issueDate, sequence)
 		code := orderCode.Value()
-		expected := "202200000001"
 		// then
 		assert.Equal(t, expected, code)
 	})

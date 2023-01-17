@@ -104,4 +104,15 @@ func TestNewOrder(t *testing.T) {
 		// then
 		assert.Equal(t, expected, obtained)
 	})
+
+	t.Run("should execute an order option function when its given to constructor", func(t *testing.T) {
+		// given
+		orderExecuted := false
+		fakeOrderOption := func(order *Order) { orderExecuted = true }
+		// when
+		_, err := NewOrder("17185070031", time.Now(), 1, fakeOrderOption)
+		require.NoError(t, err)
+		// then
+		assert.True(t, orderExecuted)
+	})
 }

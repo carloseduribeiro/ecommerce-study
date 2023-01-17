@@ -14,7 +14,7 @@ func NewItemRepository(connection database.Connection) *ItemRepository {
 }
 
 func (i *ItemRepository) GetById(id int) (*entity.Item, error) {
-	stmt := "select id, category, description, price, width, height, length, weight from ccca.item where id = $1"
+	stmt := "SELECT id, category, description, price, width, height, length, weight FROM ccca.item WHERE id = $1"
 	row, _ := i.conn.QueryRow(stmt, id)
 	dto := itemDto{}
 	err := row.Scan(

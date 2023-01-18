@@ -1,22 +1,41 @@
 package entity
 
-type ItemOption func(item *Item)
+import "fmt"
+
+const invalidParamErrStr = "invalid parameter value: %s is less then zero"
+
+type ItemOption func(item *Item) error
 
 func WithDimensions(width, height, length float64) ItemOption {
-	return func(item *Item) {
+	return func(item *Item) error {
+		if width < 0 {
+			return fmt.Errorf(invalidParamErrStr, "width")
+		}
+		if height < 0 {
+			return fmt.Errorf(invalidParamErrStr, "height")
+		}
+		if length < 0 {
+			return fmt.Errorf(invalidParamErrStr, "length")
+		}
 		item.dimension = NewDimension(width, height, length)
+		return nil
 	}
 }
 
 func WithDimension(dimension Dimension) ItemOption {
-	return func(item *Item) {
+	return func(item *Item) error {
 		item.dimension = dimension
+		return nil
 	}
 }
 
 func WithWeight(weight float64) ItemOption {
-	return func(item *Item) {
+	return func(item *Item) error {
+		if weight < 0 {
+			return fmt.Errorf(invalidParamErrStr, "weight")
+		}
 		item.weight = weight
+		return nil
 	}
 }
 

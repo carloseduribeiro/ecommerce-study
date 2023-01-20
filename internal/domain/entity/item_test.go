@@ -2,6 +2,7 @@ package entity
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
@@ -9,7 +10,8 @@ func TestItem(t *testing.T) {
 	t.Run("should create an item with dimension and calculate volume", func(t *testing.T) {
 		// given
 		dimension := NewDimension(100.0, 30.0, 10.0)
-		item := NewItem(1, "Instrumentos Musicais", "Guitarra", 1000, WithDimension(dimension))
+		item, err := NewItem(1, "Instrumentos Musicais", "Guitarra", 1000, WithDimension(dimension))
+		require.NoError(t, err)
 		// when
 		result := item.Volume()
 		// then
@@ -18,7 +20,8 @@ func TestItem(t *testing.T) {
 
 	t.Run("should create an item with dimensions and calculate density", func(t *testing.T) {
 		// given
-		item := NewItem(1, "Instrumentos Musicais", "Guitarra", 1000, WithDimensions(100, 30, 10), WithWeight(3))
+		item, err := NewItem(1, "Instrumentos Musicais", "Guitarra", 1000, WithDimensions(100, 30, 10), WithWeight(3))
+		require.NoError(t, err)
 		// when
 		result := item.Density()
 		// then
@@ -27,7 +30,8 @@ func TestItem(t *testing.T) {
 
 	t.Run("should create an item without dimensions and return density and volume equal to zero", func(t *testing.T) {
 		// given
-		item := NewItem(1, "Instrumentos Musicais", "Guitarra", 1000)
+		item, err := NewItem(1, "Instrumentos Musicais", "Guitarra", 1000)
+		require.NoError(t, err)
 		// when
 		volume := item.Volume()
 		density := item.Density()

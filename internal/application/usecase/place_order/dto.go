@@ -4,7 +4,7 @@ import "time"
 
 type ItemInput struct {
 	IdItem   int
-	Quantity int
+	Quantity uint
 }
 
 type PlaceOrderInput struct {

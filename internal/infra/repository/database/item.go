@@ -14,7 +14,7 @@ func NewItemRepository(connection database.Connection) *ItemRepository {
 }
 
 func (i *ItemRepository) GetById(id int) (*entity.Item, error) {
-	stmt := "SELECT id, category, description, price, width, height, length, weight FROM ccca.item WHERE id = $1"
+	stmt := "SELECT id, category, description, price, width, height, length, weight FROM ecommerce.item WHERE id = $1"
 	row, _ := i.conn.QueryRow(stmt, id)
 	dto := itemDto{}
 	err := row.Scan(
@@ -23,8 +23,7 @@ func (i *ItemRepository) GetById(id int) (*entity.Item, error) {
 	if err != nil {
 		return nil, err
 	}
-	item := dto.toEntity()
-	return &item, nil
+	return dto.toEntity(), nil
 }
 
 type itemDto struct {
@@ -38,7 +37,7 @@ type itemDto struct {
 	length      *float64
 }
 
-func (i *itemDto) toEntity() entity.Item {
+func (i *itemDto) toEntity() *entity.Item {
 	itemOptions := make([]entity.ItemOption, 0, 2)
 	if i.weight != nil {
 		itemOptions = append(itemOptions, entity.WithWeight(*i.weight))
@@ -46,5 +45,6 @@ func (i *itemDto) toEntity() entity.Item {
 	if i.width != nil && i.height != nil && i.length != nil {
 		itemOptions = append(itemOptions, entity.WithDimensions(*i.width, *i.height, *i.length))
 	}
-	return entity.NewItem(i.id, i.category, i.description, i.price, itemOptions...)
+	itemEntity, _ := entity.NewItem(i.id, i.category, i.description, i.price, itemOptions...)
+	return itemEntity
 }

@@ -23,7 +23,7 @@ func (s *SimulateFreight) execute(input SimulateFreightInput) (*SimulateFreightO
 		if err != nil {
 			return nil, errors.New("item not found")
 		}
-		freight.AddItem(*item, orderItemInput.Quantity)
+		freight.AddItem(item, orderItemInput.Quantity)
 	}
 	output := &SimulateFreightOutput{total: freight.Total()}
 	return output, nil

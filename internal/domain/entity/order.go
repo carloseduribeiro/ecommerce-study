@@ -32,7 +32,7 @@ func NewOrder(cpf string, issueDate time.Time, sequence int, opts ...OrderOption
 	return order, nil
 }
 
-func (o *Order) AddItem(item Item, quantity int) {
+func (o *Order) AddItem(item *Item, quantity uint) {
 	o.orderItems = append(o.orderItems, NewOrderItem(item, quantity, item.price))
 	o.freight.AddItem(item, quantity)
 }

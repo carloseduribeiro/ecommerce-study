@@ -48,7 +48,7 @@ type Item struct {
 	dimension   Dimension
 }
 
-func NewItem(id int, category, description string, price float64, opts ...ItemOption) Item {
+func NewItem(id int, category, description string, price float64, opts ...ItemOption) (*Item, error) {
 	item := &Item{
 		id:          id,
 		category:    category,
@@ -58,9 +58,11 @@ func NewItem(id int, category, description string, price float64, opts ...ItemOp
 		weight:      0.0,
 	}
 	for _, opt := range opts {
-		opt(item)
+		if err := opt(item); err != nil {
+			return nil, err
+		}
 	}
-	return *item
+	return item, nil
 }
 
 func (i Item) Volume() float64 {

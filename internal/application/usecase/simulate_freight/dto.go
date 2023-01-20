@@ -2,7 +2,7 @@ package simulate_freight
 
 type ItemInput struct {
 	IdItem   int
-	Quantity int
+	Quantity uint
 }
 type SimulateFreightInput struct {
 	OrderItems []ItemInput

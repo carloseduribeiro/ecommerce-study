@@ -99,11 +99,11 @@ func migrateDB(t *testing.T, dataSourceName string) {
 func insertTestData(t *testing.T, connection Connection) {
 	t.Helper()
 	queries := []map[string][]any{
-		{`insert into ccca.item(category, description, price, width, height, length, weight) values ($1, $2, $3, $4, $5, $6, $7);`: {"Instrumentos Musicais", "Guitarra", 1000, 100, 50, 15, 3}},
-		{`insert into ccca.item(category, description, price, width, height, length, weight) values ($1, $2, $3, $4, $5, $6, $7);`: {"Instrumentos Musicais", "Amplificador", 5000, 50, 50, 50, 22}},
-		{`insert into ccca.item(category, description, price, width, height, length, weight) values ($1, $2, $3, $4, $5, $6, $7);`: {"Acessórios", "Cabo", 30, 10, 10, 10, 1}},
-		{`insert into ccca.coupon(code, percentage, expire_date) values ($1, $2, $3);`: {"VALE20", 20, "2022-10-10T10:00:00"}},
-		{`insert into ccca.coupon(code, percentage, expire_date) values ($1, $2, $3);`: {"VALE20_EXPIRED", 20, "2020-10-10T10:00:00"}},
+		{`insert into ecommerce.item(category, description, price, width, height, length, weight) values ($1, $2, $3, $4, $5, $6, $7);`: {"Instrumentos Musicais", "Guitarra", 1000, 100, 50, 15, 3}},
+		{`insert into ecommerce.item(category, description, price, width, height, length, weight) values ($1, $2, $3, $4, $5, $6, $7);`: {"Instrumentos Musicais", "Amplificador", 5000, 50, 50, 50, 22}},
+		{`insert into ecommerce.item(category, description, price, width, height, length, weight) values ($1, $2, $3, $4, $5, $6, $7);`: {"Acessórios", "Cabo", 30, 10, 10, 10, 1}},
+		{`insert into ecommerce.coupon(code, percentage, expire_date) values ($1, $2, $3);`: {"VALE20", 20, "2022-10-10T10:00:00"}},
+		{`insert into ecommerce.coupon(code, percentage, expire_date) values ($1, $2, $3);`: {"VALE20_EXPIRED", 20, "2020-10-10T10:00:00"}},
 	}
 	for _, query := range queries {
 		for stmt, values := range query {

@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       - XABARAS=S
-      - POSTGRES_DB=ccca
+      - POSTGRES_DB=ecommerce
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
     volumes:

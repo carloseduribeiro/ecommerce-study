@@ -1,12 +1,12 @@
 package entity
 
 type OrderItem struct {
-	item     Item
-	quantity int
+	item     *Item
+	quantity uint
 	price    float64
 }
 
-func NewOrderItem(item Item, quantity int, price float64) OrderItem {
+func NewOrderItem(item *Item, quantity uint, price float64) OrderItem {
 	return OrderItem{item, quantity, price}
 }
 

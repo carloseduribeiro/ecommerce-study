@@ -14,7 +14,7 @@ func NewFreight() Freight {
 	return Freight{distance: DefaultDistance}
 }
 
-func (f *Freight) AddItem(item Item, quantity int) {
+func (f *Freight) AddItem(item *Item, quantity uint) {
 	f.total += (item.Volume() * f.distance * (item.Density() / 100)) * float64(quantity)
 }
 

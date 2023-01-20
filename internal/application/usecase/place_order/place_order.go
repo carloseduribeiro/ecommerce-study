@@ -27,14 +27,16 @@ func (p PlaceOrder) Execute(input PlaceOrderInput) PlaceOrderOutput {
 	sequence := *count + 1
 	order, _ := entity.NewOrder(input.Cpf, input.IssueDate, sequence)
 	for _, orderItem := range input.OrderItems {
-		item, err := p.itemRepository.GetById(orderItem.IdItem)
+		var item *entity.Item
+		item, err = p.itemRepository.GetById(orderItem.IdItem)
 		if err != nil {
 			panic(err)
 		}
-		order.AddItem(*item, orderItem.Quantity)
+		order.AddItem(item, orderItem.Quantity)
 	}
 	if input.Coupon != nil {
-		coupon, err := p.couponRepository.GetByCode(*input.Coupon)
+		var coupon *entity.Coupon
+		coupon, err = p.couponRepository.GetByCode(*input.Coupon)
 		if err != nil {
 			panic(err)
 		}

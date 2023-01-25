@@ -1,6 +1,7 @@
 package memory
 
 import (
+	"fmt"
 	"github.com/ecommerce-study/internal/domain/entity"
 )
 
@@ -21,4 +22,13 @@ func (o *OrderRepositoryMemory) Save(order *entity.Order) error {
 func (o *OrderRepositoryMemory) Count() (*int, error) {
 	tmp := len(o.orders)
 	return &tmp, nil
+}
+
+func (o *OrderRepositoryMemory) GetByCode(code string) (*entity.Order, error) {
+	for _, order := range o.orders {
+		if order.Code() == code {
+			return &order, nil
+		}
+	}
+	return nil, fmt.Errorf("order not found with the given code")
 }

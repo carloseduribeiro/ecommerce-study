@@ -2,6 +2,7 @@ package place_order
 
 import (
 	"github.com/ecommerce-study/internal/domain/entity"
+	"github.com/ecommerce-study/internal/domain/factory"
 	"github.com/ecommerce-study/internal/domain/repository"
 )
 
@@ -11,11 +12,11 @@ type PlaceOrder struct {
 	couponRepository repository.CouponRepository
 }
 
-func NewPlaceOrder(itemRepository repository.ItemRepository, orderRepository repository.OrderRepository, couponRepository repository.CouponRepository) PlaceOrder {
+func NewPlaceOrder(repositoryFactory factory.Repository) PlaceOrder {
 	return PlaceOrder{
-		itemRepository:   itemRepository,
-		orderRepository:  orderRepository,
-		couponRepository: couponRepository,
+		itemRepository:   repositoryFactory.CreateItemRepository(),
+		orderRepository:  repositoryFactory.CreateOrderRepository(),
+		couponRepository: repositoryFactory.CreateCouponRepository(),
 	}
 }
 
@@ -47,6 +48,6 @@ func (p PlaceOrder) Execute(input PlaceOrderInput) PlaceOrderOutput {
 		panic(err)
 	}
 	total := order.Total()
-	output := NewPlaceOrderOutput(total, order.Code().Value())
+	output := NewPlaceOrderOutput(total, order.Code())
 	return output
 }

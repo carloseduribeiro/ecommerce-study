@@ -2,6 +2,7 @@ package validate_coupon
 
 import (
 	"github.com/ecommerce-study/internal/config/clock"
+	"github.com/ecommerce-study/internal/domain/factory"
 	"github.com/ecommerce-study/internal/domain/repository"
 )
 
@@ -9,9 +10,9 @@ type ValidateCoupon struct {
 	couponRepository repository.CouponRepository
 }
 
-func NewValidateCoupon(couponRepository repository.CouponRepository) ValidateCoupon {
+func NewValidateCoupon(repositoryFactory factory.Repository) ValidateCoupon {
 	return ValidateCoupon{
-		couponRepository: couponRepository,
+		couponRepository: repositoryFactory.CreateCouponRepository(),
 	}
 }
 

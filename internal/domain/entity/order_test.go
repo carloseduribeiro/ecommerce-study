@@ -125,7 +125,7 @@ func TestNewOrder(t *testing.T) {
 		order, err := NewOrder("17185070031", issueDate, 1)
 		require.NoError(t, err)
 		// when
-		obtained := order.Code().Value()
+		obtained := order.Code()
 		expected := "202100000001"
 		// then
 		assert.Equal(t, expected, obtained)

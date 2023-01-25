@@ -1,7 +1,7 @@
 package simulate_freight
 
 import (
-	"github.com/ecommerce-study/internal/infra/repository/memory"
+	"github.com/ecommerce-study/internal/infra/factory"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -9,8 +9,8 @@ import (
 func TestSimulateFreight(t *testing.T) {
 	t.Run("should simulate the freight of an order", func(t *testing.T) {
 		// given
-		itemRepository := memory.NewItemRepository()
-		usecase := NewSimulateFreight(&itemRepository)
+		repositoryFactory := factory.NewMemoryRepositoryFactory()
+		usecase := NewSimulateFreight(repositoryFactory.CreateItemRepository())
 		input := SimulateFreightInput{
 			OrderItems: []ItemInput{
 				{IdItem: 1, Quantity: 1},

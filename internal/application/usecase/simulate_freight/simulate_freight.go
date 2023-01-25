@@ -3,6 +3,7 @@ package simulate_freight
 import (
 	"errors"
 	"github.com/ecommerce-study/internal/domain/entity"
+	"github.com/ecommerce-study/internal/domain/factory"
 	"github.com/ecommerce-study/internal/domain/repository"
 )
 
@@ -10,9 +11,9 @@ type SimulateFreight struct {
 	itemRepository repository.ItemRepository
 }
 
-func NewSimulateFreight(itemRepository repository.ItemRepository) SimulateFreight {
+func NewSimulateFreight(repositoryFactory factory.Repository) SimulateFreight {
 	return SimulateFreight{
-		itemRepository: itemRepository,
+		itemRepository: repositoryFactory.CreateItemRepository(),
 	}
 }
 

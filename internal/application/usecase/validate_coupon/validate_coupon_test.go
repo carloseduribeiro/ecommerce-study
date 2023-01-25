@@ -2,7 +2,7 @@ package validate_coupon
 
 import (
 	"github.com/ecommerce-study/internal/config/clock"
-	"github.com/ecommerce-study/internal/infra/repository/memory"
+	"github.com/ecommerce-study/internal/infra/factory"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -11,8 +11,8 @@ import (
 func TestValidateCoupon(t *testing.T) {
 	t.Run("should validate a coupon", func(t *testing.T) {
 		// given
-		couponRepository := memory.NewCouponRepository()
-		usecase := NewValidateCoupon(&couponRepository)
+		repositoryFactory := factory.NewMemoryRepositoryFactory()
+		usecase := NewValidateCoupon(repositoryFactory.CreateCouponRepository())
 		clockMock := clock.GetClockMock()
 		clockMock.Set(time.Date(2022, 1, 1, 0, 0, 0, 0, time.UTC))
 		// when
@@ -23,8 +23,8 @@ func TestValidateCoupon(t *testing.T) {
 
 	t.Run("should return false when the repository returns an error", func(t *testing.T) {
 		// given
-		couponRepository := memory.NewCouponRepository()
-		usecase := NewValidateCoupon(&couponRepository)
+		repositoryFactory := factory.NewMemoryRepositoryFactory()
+		usecase := NewValidateCoupon(repositoryFactory.CreateCouponRepository())
 		// when
 		isValid, err := usecase.Execute("VALE100")
 		// when
@@ -34,8 +34,8 @@ func TestValidateCoupon(t *testing.T) {
 
 	t.Run("should validate a non-existing coupon", func(t *testing.T) {
 		// given
-		couponRepository := memory.NewCouponRepository()
-		usecase := NewValidateCoupon(&couponRepository)
+		repositoryFactory := factory.NewMemoryRepositoryFactory()
+		usecase := NewValidateCoupon(repositoryFactory.CreateCouponRepository())
 		// when
 		isValid, err := usecase.Execute("VALE100")
 		// when

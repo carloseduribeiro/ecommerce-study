@@ -54,6 +54,6 @@ func (o *Order) Total() (total float64) {
 	return
 }
 
-func (o *Order) Code() OrderCode {
-	return o.code
+func (o *Order) Code() string {
+	return o.code.Value()
 }
